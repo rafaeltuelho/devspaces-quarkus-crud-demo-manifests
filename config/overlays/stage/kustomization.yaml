@@ -1,6 +1,6 @@
-namePrefix: stage-
+# namePrefix: staging-
 commonLabels:
-  variant: stage
+  variant: staging
 
 
 # in stage we have 2 replicas

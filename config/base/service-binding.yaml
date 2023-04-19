@@ -4,10 +4,11 @@ metadata:
   name: quarkus-crud-demo-postgresql
 spec:
   application:
-    group: apps.openshift.io
+    # group: apps.openshift.io
+    group: apps
     name: quarkus-crud-demo
     version: v1
-    kind: DeploymentConfig
+    kind: Deployment
   services:
     - group: postgres-operator.crunchydata.com
       version: v1beta1
