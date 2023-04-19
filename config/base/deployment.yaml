@@ -27,10 +27,10 @@ spec:
       containers:
         - name: quarkus-crud-demo
           image: quay.io/rafaeltuelho/devspaces-quarkus-crud-demo:latest
-        - command:
-            - java
-            - -jar
-            - /deployments/quarkus-run.jar
+        # - command:
+        #     - java
+        #     - -jar
+        #     - /deployments/quarkus-run.jar
           readinessProbe:
             httpGet:
               path: /q/health/ready
@@ -54,8 +54,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-            - name: JAVA_APP_JAR
-              value: /deployments/devspaces-quarkus-crud-demo-java11-latest-runner.jar
+            # - name: JAVA_APP_JAR
+            #   value: /deployments/devspaces-quarkus-crud-demo-java11-latest-runner.jar
           ports:
             - name: http
               containerPort: 8080
