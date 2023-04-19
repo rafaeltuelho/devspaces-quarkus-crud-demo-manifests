@@ -25,6 +25,6 @@ kind: Kustomization
 resources:
 - ../../base
 images:
-- digest: sha256:eb2c8d1472eeff3059ac4c437e96cfd8a985d9c3779205679deb888544dbdaf6
+- digest: sha256:141ed58aa33af6159100e052ec9963fac3ec9f4f42670315c02ab537ecfb2aca
   name: quay.io/rafaeltuelho/devspaces-quarkus-crud-demo:latest
   newName: quay.io/rafaeltuelho/devspaces-quarkus-crud-demo
