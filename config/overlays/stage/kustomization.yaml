@@ -1,0 +1,44 @@
+namePrefix: stage-
+commonLabels:
+  variant: stage
+
+
+# in stage we have 2 replicas
+replicas:
+- count: 2
+  name: quarkus-crud-demo
+
+
+# apply some patches
+  # apply health checks to deployment
+
+  # change the host name of the generated route
+
+# this patch needs to be done, because kustomize does not change 
+# the route target service name
+patches:
+- path: apply-health-checks.yaml
+  target:
+    kind: Deployment
+    name: simple
+    version: v1
+- patch: |-
+    - op: replace
+      path: /spec/to/name
+      value: stage-simple
+  target:
+    kind: Route
+
+# change env parameter in config-map 
+# we could also simply generate the config-map from a source
+# or we could use one of the patches above for this
+patchesStrategicMerge:
+- change-env-value.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+images:
+- digest: sha256:97a32ce12b1bcd53b7ff5b03b7bc3fc75d4c42b97141f939802057b113fcff7d
+  name: quay.io/rafaeltuelho/devspaces-quarkus-crud-demo:latest
+  newName: quay.io/rafaeltuelho/devspaces-quarkus-crud-demo:1.0.0

@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: quarkus-crud-demo-dev
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: demo-app-dev
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: config/overlays/dev
+    repoURL: https://github.com/rafaeltuelho/devspaces-quarkus-crud-demo-manifests.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
