@@ -17,7 +17,7 @@ patches:
 - patch: |-
     - op: replace
       path: /spec/to/name
-      value: dev-quarkus-crud-demo
+      value: quarkus-crud-demo
   target:
     kind: Route
 apiVersion: kustomize.config.k8s.io/v1beta1
