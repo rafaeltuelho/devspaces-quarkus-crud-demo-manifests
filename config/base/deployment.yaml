@@ -6,7 +6,8 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: quarkus-crud-demo
+      app.kubernetes.io/name: quarkus-crud-demo
+      app.kubernetes.io/version: java11-latest
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -15,15 +16,52 @@ spec:
   template:
     metadata:
       labels:
-        app: simple          
+        app.kubernetes.io/name: quarkus-crud-demo
+        app.kubernetes.io/version: java11-latest
+        app.openshift.io/runtime: quarkus
+      annotations:
+        app.openshift.io/vcs-url: 'https://github.com/rafaeltuelho/devspaces-quarkus-crud-demo'
     spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
       containers:
-      - name: quarkus-crud-demo
-        image: quay.io/rafaeltuelho/devspaces-quarkus-crud-demo:latest
-        imagePullPolicy: Always
-        ports:
-          - containerPort: 8080
-            protocol: TCP
-        # envFrom:
-        #   - configMapRef:
-        #       name: app-config
+        - name: quarkus-crud-demo
+          image: quay.io/rafaeltuelho/devspaces-quarkus-crud-demo:latest
+          command:
+            - java
+            - '-jar'
+            - /deployments/quarkus-run.jar
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+              scheme: HTTP
+            timeoutSeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: 8080
+              scheme: HTTP
+            timeoutSeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 3
+          env:
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: JAVA_APP_JAR
+              value: >-
+                /deployments/devspaces-quarkus-crud-demo-java11-latest-runner.jar
+            - name: SERVICE_BINDING_ROOT
+              value: /bindings
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: Always

@@ -1,0 +1,17 @@
+apiVersion: binding.operators.coreos.com/v1alpha1
+kind: ServiceBinding
+metadata:
+  name: quarkus-crud-demo-postgresql
+spec:
+  application:
+    group: apps.openshift.io
+    name: quarkus-crud-demo
+    version: v1
+    kind: DeploymentConfig
+  services:
+    - group: postgres-operator.crunchydata.com
+      version: v1beta1
+      kind: PostgresCluster
+      name: pg-cluster
+  detectBindingResources: false
+  bindAsFiles: true

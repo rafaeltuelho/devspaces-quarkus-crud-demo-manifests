@@ -9,6 +9,7 @@ resources:
 - deployment.yaml
 - service.yaml
 - route.yaml
+- service-binding.yaml
 # - post-sync-job.yaml
 # - pre-sync-job.yaml
 

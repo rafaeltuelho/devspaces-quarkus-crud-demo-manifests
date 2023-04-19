@@ -20,12 +20,12 @@ patches:
 - path: apply-health-checks.yaml
   target:
     kind: Deployment
-    name: simple
+    name: quarkus-crud-demo
     version: v1
 - patch: |-
     - op: replace
       path: /spec/to/name
-      value: stage-simple
+      value: staging-quarkus-crud-demo
   target:
     kind: Route
 

@@ -1,12 +1,14 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
+  labels:
+    app.kubernetes.io/name: quarkus-crud-demo
+    app.kubernetes.io/version: java11-latest
+    app.openshift.io/runtime: quarkus
   name: quarkus-crud-demo
 spec:
   port:
-    targetPort: 8080-tcp
+    targetPort: 8080
   to:
     kind: Service
     name: quarkus-crud-demo
-    weight: 100
-  wildcardPolicy: None
