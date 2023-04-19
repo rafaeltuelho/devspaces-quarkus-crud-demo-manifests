@@ -27,9 +27,9 @@ spec:
       containers:
         - name: quarkus-crud-demo
           image: quay.io/rafaeltuelho/devspaces-quarkus-crud-demo:latest
-          command:
+        - command:
             - java
-            - '-jar'
+            - -jar
             - /deployments/quarkus-run.jar
           readinessProbe:
             httpGet:
@@ -53,13 +53,9 @@ spec:
             - name: KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
-                  apiVersion: v1
                   fieldPath: metadata.namespace
             - name: JAVA_APP_JAR
-              value: >-
-                /deployments/devspaces-quarkus-crud-demo-java11-latest-runner.jar
-            - name: SERVICE_BINDING_ROOT
-              value: /bindings
+              value: /deployments/devspaces-quarkus-crud-demo-java11-latest-runner.jar
           ports:
             - name: http
               containerPort: 8080
